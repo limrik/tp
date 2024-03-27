@@ -1,5 +1,6 @@
 package seedu.address.ui;
 
+import java.time.LocalDate;
 import java.time.LocalTime;
 
 import javafx.animation.Animation;
@@ -82,15 +83,17 @@ public class AppointmentCard extends UiPart<Region> {
 
     private void bindCardPaneStyle() {
         cardPane.styleProperty().bind(
-                Bindings.when(isBeforeCurrentTime(appt))
+                Bindings.when(isBeforeCurrentDateTime(appt))
                         .then("-fx-background-color: #FF7074")
                         .otherwise("-fx-background-color: transparent")
         );
     }
 
-    private BooleanBinding isBeforeCurrentTime(Appointment appt) {
+    private BooleanBinding isBeforeCurrentDateTime(Appointment appt) {
+        System.out.println(appt.getDate());
+        System.out.println(LocalDate.now());
         return Bindings.createBooleanBinding(() ->
-            appt.getStartTime().value.isBefore(LocalTime.now())
+            appt.getStartTime().value.isBefore(LocalTime.now()) && appt.getDate().value.isBefore(LocalDate.now())
         );
     }
 }
